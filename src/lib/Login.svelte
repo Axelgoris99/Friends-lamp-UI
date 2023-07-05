@@ -18,7 +18,9 @@
 				username,
 				password,
 				passwordConfirm: password,
-				name: username
+				name: username,
+				color: '#ffffff',
+				message: 'Je suis la brolamp !'
 			};
 			const createdUser = await pb.collection('users').create(data);
 			await login();

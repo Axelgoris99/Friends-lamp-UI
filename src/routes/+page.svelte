@@ -1,14 +1,54 @@
 <script lang="ts">
 	import ColorPicker from 'svelte-awesome-color-picker';
+	import { currentUser, pb } from '$lib/pocketbase';
 
 	let hex: string; // or hsv or rgb (need RgbaColor type)
-	let finishedTouching;
+	let finishedTouching: boolean;
 	let message: string;
+	let timeOut: NodeJS.Timeout;
 
-	const yourFunction = async () => {};
-	$: if (hex) {
+	// $: message = $currentUser?.message;
+	// $: hex = $currentUser?.color;
+
+	async function checkForChangeAfterNSeconds(time: number) {
+		if (!$currentUser) {
+			alert("Tu dois te connecter d'abord !");
+			return;
+		}
+		if (timeOut) clearTimeout(timeOut);
+		async function writeToPB() {
+			const data = {
+				color: hex
+			};
+			try {
+				const record = await pb.collection('users').update($currentUser.id, data);
+			} catch {
+				alert('Ca a merdé quelque part...');
+				return;
+			}
+		}
+		timeOut = setTimeout(writeToPB, time);
+	}
+
+	function changeColor() {
 		finishedTouching = false;
-		checkForChangeAfter5Seconds();
+		checkForChangeAfterNSeconds(1000);
+	}
+
+	async function changeMessage() {
+		if (!$currentUser) {
+			alert("Tu dois te connecter d'abord !");
+			return;
+		}
+		const data = {
+			message: message
+		};
+		try {
+			const record = await pb.collection('users').update($currentUser.id, data);
+		} catch {
+			alert('Ca a merdé quelque part...');
+			return;
+		}
 	}
 </script>
 
@@ -160,10 +200,16 @@
 		</figure>
 		<!-- / -->
 		<h3>Choisis une couleur pour ta lampe 🌈</h3>
-		<ColorPicker bind:hex label="" isInput={false} isTextInput={false} />
+		<ColorPicker bind:hex label="" isInput={false} isTextInput={false} on:input={changeColor} />
 
 		<h3>Choisis un message pour ta lampe 💬</h3>
-		<input bind:value={message} class="input" type="text" placeholder="Message" />
+		<input
+			bind:value={message}
+			class="input"
+			type="text"
+			placeholder="Message"
+			on:change={changeMessage}
+		/>
 		<div class="space-y-2">
 			<p>Bon anniversaire Jerem ♥</p>
 		</div>
