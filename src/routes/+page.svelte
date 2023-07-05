@@ -2,13 +2,14 @@
 	import ColorPicker from 'svelte-awesome-color-picker';
 	import { currentUser, pb } from '$lib/pocketbase';
 
-	let hex: string; // or hsv or rgb (need RgbaColor type)
+	let hex: string = $currentUser?.color; // or hsv or rgb (need RgbaColor type)
 	let finishedTouching: boolean;
-	let message: string;
+	let message: string = $currentUser?.message;
 	let timeOut: NodeJS.Timeout;
 
-	// $: message = $currentUser?.message;
-	// $: hex = $currentUser?.color;
+	/// Makes the app freezes forever, trapped in a somewhat infinite loop I think...
+	//$: message = $currentUser?.message;
+	//$: hex = $currentUser?.color;
 
 	async function checkForChangeAfterNSeconds(time: number) {
 		if (!$currentUser) {

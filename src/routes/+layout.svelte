@@ -35,15 +35,11 @@
 				<img class="max-h-8" src="/images/lightBulb.png" alt="Logo of the app" />
 			</svelte:fragment> -->
 			<svelte:fragment slot="lead">
-				<a href="/" target="_blank" rel="noreferrer"
-					><strong class="text-xl uppercase">BroLamp</strong>
-				</a>
+				<a href="/" rel="noreferrer"><strong class="text-xl uppercase">BroLamp</strong> </a>
 			</svelte:fragment>
 			<svelte:fragment slot="trail">
 				<button class="btn btn-sm variant-ghost-surface" on:click={modal}> Connection </button>
-				<a class="btn btn-sm variant-ghost-surface" href="/about" target="_blank" rel="noreferrer">
-					A propos
-				</a>
+				<a class="btn btn-sm variant-ghost-surface" href="/about" rel="noreferrer"> A propos </a>
 				<LightSwitch />
 			</svelte:fragment>
 		</AppBar>
