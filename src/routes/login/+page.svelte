@@ -1,10 +1,9 @@
 <script lang="ts">
 	import Login from '$lib/Login.svelte';
-	import { currentUser } from '$lib/pocketbase';
 </script>
 
-{#if $currentUser}
-	<p>Connecté en tant que {$currentUser.username}</p>
-{:else}
-	<Login />
-{/if}
+<div class="container h-full mx-auto flex justify-center items-center">
+	<div class="space-y-10 text-center flex flex-col items-center">
+		<Login />
+	</div>
+</div>

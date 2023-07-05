@@ -8,6 +8,20 @@
 	import { AppShell, AppBar, LightSwitch } from '@skeletonlabs/skeleton';
 	import { Modal, modalStore } from '@skeletonlabs/skeleton';
 	import type { ModalSettings, ModalComponent } from '@skeletonlabs/skeleton';
+
+	import Login from '$lib/Login.svelte';
+	const modalComponent: ModalComponent = {
+		// Pass a reference to your custom component
+		ref: Login
+	};
+	function modal() {
+		const modal: ModalSettings = {
+			type: 'component',
+			// Pass the component directly:
+			component: modalComponent
+		};
+		modalStore.trigger(modal);
+	}
 </script>
 
 <!-- Modal -->
@@ -17,16 +31,16 @@
 	<svelte:fragment slot="header">
 		<!-- App Bar -->
 		<AppBar>
+			<!-- <svelte:fragment slot="lead">
+				<img class="max-h-8" src="/images/lightBulb.png" alt="Logo of the app" />
+			</svelte:fragment> -->
 			<svelte:fragment slot="lead">
-				<img src="/images/lightBulb.png" alt="Logo of the app" />
-			</svelte:fragment>
-			<svelte:fragment slot="headline">
-				<strong class="text-xl uppercase">BroLamp</strong>
+				<a href="/" target="_blank" rel="noreferrer"
+					><strong class="text-xl uppercase">BroLamp</strong>
+				</a>
 			</svelte:fragment>
 			<svelte:fragment slot="trail">
-				<a class="btn btn-sm variant-ghost-surface" href="/login" target="_blank" rel="noreferrer">
-					Connection
-				</a>
+				<button class="btn btn-sm variant-ghost-surface" on:click={modal}> Connection </button>
 				<a class="btn btn-sm variant-ghost-surface" href="/about" target="_blank" rel="noreferrer">
 					A propos
 				</a>
@@ -43,7 +57,7 @@
 	>
 	<svelte:fragment slot="footer"
 		><div class="container h-full mx-auto flex justify-center items-center">
-			Et ça c'est encore en dessous !
+			BROLAAAAAAAAAMP !
 		</div></svelte:fragment
 	>
 </AppShell>
